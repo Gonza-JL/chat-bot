@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class Bot {
 	
@@ -14,7 +15,18 @@ public class Bot {
 	public Bot() {
 		mensajesRespuestas = new HashMap<>();
 		agregarMensajesRespuestas();
-		
+	}
+	
+	public String enviarRespuesta(String s) {
+		s = s.toLowerCase();
+		for(List<String> mensajes: mensajesRespuestas.keySet()) {
+			if(mensajes.contains(s)) {
+				Random r = new Random();
+				int stringAleatorio = r.nextInt(mensajesRespuestas.get(mensajes).size());
+				return "Bot: " + mensajesRespuestas.get(mensajes).get(stringAleatorio) + "\n";
+			}
+		}
+		return "Bot: No sé que responder ante eso :(\n";
 	}
 	
 	private void agregarMensajesRespuestas() {
@@ -31,7 +43,8 @@ public class Bot {
 					string = "";
 				} else if(c == '\n') {
 					mensajesRespuestas.put(mensajes, respuestas(i));
-					mensajes = new ArrayList<>(); 
+					mensajes = new ArrayList<>();
+					string = "";
 					i++;
 				} else {
 					string += (char) c;
@@ -71,12 +84,6 @@ public class Bot {
 			e.printStackTrace();
 		}
 		return respuestas;
-	}
-	
-	public static void main(String[] args) {
-		Bot bot = new Bot();
-		bot.agregarMensajesRespuestas();
-		System.out.println(bot.mensajesRespuestas);
 	}
 
 }

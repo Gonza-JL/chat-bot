@@ -21,8 +21,10 @@ public class Chat extends JFrame {
 	private JTextArea areaDeTexto;
 	private JButton boton;
 	private JTextField cajaDeTexto;
+	private Bot bot;
 	
 	public Chat() {
+		bot = new Bot();
 		setSize(800, 600);
 		setTitle("ChatBot");
 		setLocationRelativeTo(null);  // Establecemos la ventana en el centro de la pantalla
@@ -48,6 +50,7 @@ public class Chat extends JFrame {
 		areaDeTexto = new JTextArea();
 		areaDeTexto.setBounds(10, 10, this.getWidth() - 35, this.getHeight() - 100);
 		areaDeTexto.setEditable(false);
+		areaDeTexto.setFont(areaDeTexto.getFont().deriveFont(20f));
 		panel.add(areaDeTexto);
 		
 		JScrollPane scroll = new JScrollPane(areaDeTexto, 
@@ -68,6 +71,7 @@ public class Chat extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				agregarMensaje();
+				escrituraBot(cajaDeTexto.getText());
 			}
 
 			@Override
@@ -112,6 +116,8 @@ public class Chat extends JFrame {
 			public void keyReleased(KeyEvent e) {
 				if(e.getKeyChar() == '\n') {
 					agregarMensaje();
+					escrituraBot(cajaDeTexto.getText());
+					cajaDeTexto.setText("");
 				}
 			}
 		};
@@ -120,11 +126,10 @@ public class Chat extends JFrame {
 	
 	private void agregarMensaje() {
 		areaDeTexto.append("Tú: " + cajaDeTexto.getText() + "\n");
-		cajaDeTexto.setText("");
 	}
 	
-	private void escrituraBot() {
-		areaDeTexto.append("Bot: Todo bien?\n");
+	private void escrituraBot(String s) {
+		areaDeTexto.append(bot.enviarRespuesta(s));
 	}
 
 	
