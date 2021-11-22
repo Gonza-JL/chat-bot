@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -31,15 +32,15 @@ public class Chat extends JFrame {
 	
 	private void iniciarComponentes() {
 		agregarPanel();
-		//agregarEtiquetaUsuario();
-		agregarAreaDeTexto();
 		agregarBoton();
 		agregarCajaDeTexto();
+		agregarAreaDeTexto();
 	}
 	
 	private void agregarPanel() {
 		panel = new JPanel();
 		panel.setLayout(null); // Desactivamos el diseño por defecto
+		panel.setBackground(Color.CYAN);
 		getContentPane().add(panel); // Agregamos el panel a la ventana
 	}
 	
@@ -86,7 +87,6 @@ public class Chat extends JFrame {
 			}
 
 		};
-		
 		boton.addMouseListener(mouseListener);
 	}
 	
@@ -121,6 +121,10 @@ public class Chat extends JFrame {
 	private void agregarMensaje() {
 		areaDeTexto.append("Tú: " + cajaDeTexto.getText() + "\n");
 		cajaDeTexto.setText("");
+	}
+	
+	private void escrituraBot() {
+		areaDeTexto.append("Bot: Todo bien?\n");
 	}
 
 	
