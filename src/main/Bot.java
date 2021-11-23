@@ -93,8 +93,10 @@ public class Bot {
 	
 	private void agregarPredeterminadas() {
 		predeterminadas.add("No sé que responder ante eso :(\n");
-		predeterminadas.add("Mi creador no me programó para responder esa pregunta\n");
-		predeterminadas.add("Mi conocimiento es demasiado escaso\n");
+		predeterminadas.add("Mi creador no me programó para responderte eso\n");
+		predeterminadas.add("Mi conocimiento es demasiado escaso para responderte\n");
+		predeterminadas.add("Es todo un tema\n");
+		predeterminadas.add("Me dejaste sin palabras\n");
 	}
 	
 	private String respuestaAleatoria() {
