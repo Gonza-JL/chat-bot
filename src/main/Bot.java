@@ -10,11 +10,16 @@ import java.util.Random;
 
 public class Bot {
 	
+	private String nombre;
 	private Map<List<String>, List<String>> mensajesRespuestas;
+	private List<String> predeterminadas;
 	
-	public Bot() {
-		mensajesRespuestas = new HashMap<>();
+	public Bot(String nombre) {
+		this.nombre = nombre;
+		this.mensajesRespuestas = new HashMap<>();
+		this.predeterminadas = new ArrayList<>();
 		agregarMensajesRespuestas();
+		agregarPredeterminadas();
 	}
 	
 	public String enviarRespuesta(String s) {
@@ -23,10 +28,10 @@ public class Bot {
 			if(mensajes.contains(s)) {
 				Random r = new Random();
 				int stringAleatorio = r.nextInt(mensajesRespuestas.get(mensajes).size());
-				return "Bot: " + mensajesRespuestas.get(mensajes).get(stringAleatorio) + "\n";
+				return nombre + ": " + mensajesRespuestas.get(mensajes).get(stringAleatorio) + "\n";
 			}
 		}
-		return "Bot: No sé que responder ante eso :(\n";
+		return respuestaAleatoria();
 	}
 	
 	private void agregarMensajesRespuestas() {
@@ -84,6 +89,22 @@ public class Bot {
 			e.printStackTrace();
 		}
 		return respuestas;
+	}
+	
+	private void agregarPredeterminadas() {
+		predeterminadas.add("No sé que responder ante eso :(\n");
+		predeterminadas.add("Mi creador no me programó para responder esa pregunta\n");
+		predeterminadas.add("Mi conocimiento es demasiado escaso\n");
+	}
+	
+	private String respuestaAleatoria() {
+		Random r = new Random();
+		int stringAleatorio = r.nextInt(predeterminadas.size());
+		return nombre + ": " + predeterminadas.get(stringAleatorio);
+	}
+
+	public String getNombre() {
+		return nombre;
 	}
 
 }
