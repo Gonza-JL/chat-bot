@@ -2,6 +2,7 @@ package main;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,8 @@ public class Bot {
 	
 	public String enviarRespuesta(String s) {
 		s = s.toLowerCase();
+		s = Normalizer.normalize(s, Normalizer.Form.NFD); 
+		s = s.replaceAll("[^\\p{ASCII}]", "");
 		for(List<String> mensajes: mensajesRespuestas.keySet()) {
 			if(mensajes.contains(s)) {
 				Random r = new Random();

@@ -104,6 +104,7 @@ public class Chat extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				agregarMensaje();
 				escrituraBot(cajaDeTexto.getText());
+				cajaDeTexto.setText("");
 			}
 
 			@Override
