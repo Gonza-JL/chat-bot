@@ -1,7 +1,8 @@
 hola-holis-hello-buenas-buenos dias-buenas tardes-buenas noches-
 como estas?-todo bien?-que onda?-todo correcto?-
 que haces?-
-bien-si-a mi tambien-tambien-muy bien-perfecto-excelente-genial-
+bien-si-a mi tambien-tambien-muy bien-perfecto-excelente-genial-yes-
+me alegro-
 que musica te gusta?-que tipo de musica te gusta?-
 cual es tu comida favorita?-cual es tu comida fav?-
 como te llamas?-cual es tu nombre?-
@@ -20,3 +21,6 @@ chau-adios-hasta luego-nos vemos-
 muy mal-:(-
 cuantos años tenes?-cual es tu edad?-
 sos hombre o mujer?-cual es tu genero?-sos hombre?-sos mujer?-
+aw-aww-awww-mas tierno-
+ok-okay-oka-oki-
+f-f en el chat-

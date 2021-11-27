@@ -29,7 +29,7 @@ public class Chat extends JFrame {
 	
 	public Chat() {
 		bot = new Bot("Boti");
-		setSize(800, 600);
+		setSize(500, 700);
 		setTitle("ChatBot");
 		setLocationRelativeTo(null);  // Establecemos la ventana en el centro de la pantalla
 		iniciarComponentes();
@@ -60,6 +60,11 @@ public class Chat extends JFrame {
 		//nombreChat.setBackground(Color.RED);
 		panel.add(nombreChat);
 		
+		agregarEnLinea();
+		agregarImagenBot();
+	}
+	
+	private void agregarEnLinea() {
 		JLabel enLinea = new JLabel("en linea");
 		enLinea.setFont(new Font("arial", 0, 20));
 		enLinea.setBounds(70, 40, 70, 20);
@@ -67,7 +72,9 @@ public class Chat extends JFrame {
 		//enLinea.setOpaque(true);
 		//enLinea.setBackground(Color.RED);
 		panel.add(enLinea);
-		
+	}
+	
+	private void agregarImagenBot() {
 		ImageIcon imagenBot = new ImageIcon("Bot.png");
 		JLabel etiquetaImagen = new JLabel();
 		etiquetaImagen.setBounds(10, 10, 50, 50);
@@ -91,9 +98,11 @@ public class Chat extends JFrame {
 		}
 	
 	private void agregarBoton() {
-		boton = new JButton("Enviar");
-		boton.setBounds(this.getWidth() - 105, this.getHeight() - 75, 80, 30);
+		ImageIcon imagenBoton = new ImageIcon("boton.png");
+		boton = new JButton(imagenBoton);
+		boton.setBounds(this.getWidth() - 65, this.getHeight() - 75, 40, 30);
 		boton.setBackground(Color.GREEN);
+		boton.setIcon(new ImageIcon(imagenBoton.getImage().getScaledInstance(50, 25, Image.SCALE_SMOOTH)));
 		panel.add(boton);
 		eventoOyenteDeMouse();
 	}
@@ -129,7 +138,7 @@ public class Chat extends JFrame {
 	
 	private void agregarCajaDeTexto() {
 		cajaDeTexto = new JTextField();
-		cajaDeTexto.setBounds(10, this.getHeight() - 75, this.getWidth() - 115, 30);
+		cajaDeTexto.setBounds(10, this.getHeight() - 75, this.getWidth() - 75, 30);
 		cajaDeTexto.setBackground(Color.DARK_GRAY);
 		cajaDeTexto.setForeground(Color.WHITE);
 		panel.add(cajaDeTexto);

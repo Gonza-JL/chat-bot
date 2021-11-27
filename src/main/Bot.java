@@ -24,6 +24,9 @@ public class Bot {
 	}
 	
 	public String enviarRespuesta(String s) {
+		if(s.isEmpty()) {
+			return nombre + ": " + "Escribe algo" + "\n";
+		}
 		s = s.toLowerCase();
 		s = Normalizer.normalize(s, Normalizer.Form.NFD); 
 		s = s.replaceAll("[^\\p{ASCII}]", "");
@@ -100,6 +103,9 @@ public class Bot {
 		predeterminadas.add("Mi conocimiento es demasiado escaso para responderte\n");
 		predeterminadas.add("Es todo un tema\n");
 		predeterminadas.add("Me dejaste sin palabras\n");
+		predeterminadas.add("No puedo responderte todo :(\n");
+		predeterminadas.add("No soy real, no puedo responderte eso\n");
+		predeterminadas.add("Lo siento, no sé como responder\n");
 	}
 	
 	private String respuestaAleatoria() {
