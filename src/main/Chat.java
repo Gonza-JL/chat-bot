@@ -22,10 +22,11 @@ import javax.swing.ScrollPaneConstants;
 public class Chat extends JFrame {
 	
 	private JPanel panel;
-	private JTextArea areaDeTexto;
+	private JTextArea areaDeMensajes;
 	private JButton boton;
 	private JTextField cajaDeTexto;
 	private Bot bot;
+	private JLabel estadoBot;
 	
 	public Chat() {
 		bot = new Bot("Boti");
@@ -60,18 +61,18 @@ public class Chat extends JFrame {
 		//nombreChat.setBackground(Color.RED);
 		panel.add(nombreChat);
 		
-		agregarEnLinea();
+		agregarEstadoBot();
 		agregarImagenBot();
 	}
 	
-	private void agregarEnLinea() {
-		JLabel enLinea = new JLabel("en linea");
-		enLinea.setFont(new Font("arial", 0, 20));
-		enLinea.setBounds(70, 40, 70, 20);
-		enLinea.setForeground(Color.WHITE);
-		//enLinea.setOpaque(true);
-		//enLinea.setBackground(Color.RED);
-		panel.add(enLinea);
+	private void agregarEstadoBot() {
+		estadoBot = new JLabel("en linea");
+		estadoBot.setFont(new Font("arial", 0, 20));
+		estadoBot.setBounds(70, 40, 120, 20);
+		estadoBot.setForeground(Color.WHITE);
+		//estadoBot.setOpaque(true);
+		//estadoBot.setBackground(Color.RED);
+		panel.add(estadoBot);
 	}
 	
 	private void agregarImagenBot() {
@@ -83,15 +84,15 @@ public class Chat extends JFrame {
 	}
 	
 	private void agregarAreaDeMensajes() {
-		areaDeTexto = new JTextArea();
+		areaDeMensajes = new JTextArea();
 		//areaDeTexto.setBounds(10, 10, this.getWidth() - 35, this.getHeight() - 100);
-		areaDeTexto.setEditable(false);
-		areaDeTexto.setBackground(Color.BLACK);
-		areaDeTexto.setForeground(Color.WHITE);
-		areaDeTexto.setFont(areaDeTexto.getFont().deriveFont(20f));
-		panel.add(areaDeTexto);
+		areaDeMensajes.setEditable(false);
+		areaDeMensajes.setBackground(Color.BLACK);
+		areaDeMensajes.setForeground(Color.WHITE);
+		areaDeMensajes.setFont(areaDeMensajes.getFont().deriveFont(20f));
+		panel.add(areaDeMensajes);
 		
-		JScrollPane scroll = new JScrollPane(areaDeTexto, 
+		JScrollPane scroll = new JScrollPane(areaDeMensajes, 
 				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scroll.setBounds(10, 65, this.getWidth() - 35, this.getHeight() - 140);
 		panel.add(scroll);
@@ -111,9 +112,7 @@ public class Chat extends JFrame {
 		MouseListener mouseListener = new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				agregarMensaje();
-				escrituraBot(cajaDeTexto.getText());
-				cajaDeTexto.setText("");
+				simulacionDeConversacion();
 			}
 
 			@Override
@@ -159,20 +158,39 @@ public class Chat extends JFrame {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if(e.getKeyChar() == '\n') {
-					agregarMensaje();
-					escrituraBot(cajaDeTexto.getText());
-					cajaDeTexto.setText("");
+					simulacionDeConversacion();
 				}
 			}
 		};
 		cajaDeTexto.addKeyListener(keyListener);
 	}
 	
+	private void simulacionDeConversacion() {
+		String mensaje = cajaDeTexto.getText();
+		Thread t1 = new Thread() {
+			
+			@Override
+			public void run() {
+				estadoBot.setText("Escribiendo...");
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				escrituraBot(mensaje);
+				estadoBot.setText("En linea");
+			}
+		};
+		t1.start();
+		agregarMensaje();
+		cajaDeTexto.setText("");
+	}
+	
 	private void agregarMensaje() {
-		areaDeTexto.append("Tú: " + cajaDeTexto.getText() + "\n");
+		areaDeMensajes.append("Tú: " + cajaDeTexto.getText() + "\n");
 	}
 	
 	private void escrituraBot(String s) {
-		areaDeTexto.append(bot.enviarRespuesta(s));
+		areaDeMensajes.append(bot.enviarRespuesta(s));
 	}
 }
