@@ -7,7 +7,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,6 +33,7 @@ public class Chat extends JFrame {
 	private JTextField cajaDeTexto;
 	private Bot bot;
 	private JLabel estadoBot;
+	private Clip sonidoNotificacion;
 	
 	public Chat() {
 		bot = new Bot("Boti");
@@ -112,7 +119,7 @@ public class Chat extends JFrame {
 		MouseListener mouseListener = new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				simulacionDeConversacion();
+				simularConversacion();
 			}
 
 			@Override
@@ -158,14 +165,14 @@ public class Chat extends JFrame {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if(e.getKeyChar() == '\n') {
-					simulacionDeConversacion();
+					simularConversacion();
 				}
 			}
 		};
 		cajaDeTexto.addKeyListener(keyListener);
 	}
 	
-	private void simulacionDeConversacion() {
+	private void simularConversacion() {
 		String mensaje = cajaDeTexto.getText();
 		Thread t1 = new Thread() {
 			
@@ -192,5 +199,16 @@ public class Chat extends JFrame {
 	
 	private void escrituraBot(String s) {
 		areaDeMensajes.append(bot.enviarRespuesta(s));
+		try {
+			iniciarNotificacion();
+		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		}
+		sonidoNotificacion.start();
+	}
+	
+	private void iniciarNotificacion() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
+		sonidoNotificacion = AudioSystem.getClip();
+		sonidoNotificacion.open(AudioSystem.getAudioInputStream(new File("notificacion.wav")));
 	}
 }
