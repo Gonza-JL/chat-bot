@@ -1,6 +1,7 @@
 package main;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.text.Normalizer;
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ public class Bot {
 	private String nombre;
 	private Map<List<String>, List<String>> mensajesRespuestas;
 	private List<String> predeterminadas;
+	private final File mensajesTxt = new File("data/mensajes.txt");
+	private final File respuestasTxt = new File("data/respuestas.txt");
 	
 	public Bot(String nombre) {
 		this.nombre = nombre;
@@ -42,7 +45,7 @@ public class Bot {
 	
 	private void agregarMensajesRespuestas() {
 		try {
-			FileReader archivo = new FileReader("mensajes.txt");
+			FileReader archivo = new FileReader(mensajesTxt);
 			@SuppressWarnings("resource")
 			BufferedReader lector = new BufferedReader(archivo);
 			int c, i = 1;
@@ -69,7 +72,7 @@ public class Bot {
 	private List<String> respuestas(Integer linea) {
 		List<String> respuestas = new ArrayList<>();
 		try {
-			FileReader archivo = new FileReader("respuestas.txt");
+			FileReader archivo = new FileReader(respuestasTxt);
 			@SuppressWarnings("resource")
 			BufferedReader lector = new BufferedReader(archivo);
 			int i = 1;

@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
+import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
@@ -33,7 +34,9 @@ public class Chat extends JFrame {
 	private JTextField cajaDeTexto;
 	private Bot bot;
 	private JLabel estadoBot;
-	private Clip sonidoNotificacion;
+	private final ImageIcon botPng = new ImageIcon("images/Bot.png");
+	private final ImageIcon botonPng = new ImageIcon("images/boton.png");
+	private final File sonidoNotificacion = new File("data/notificacion.wav");
 	
 	public Chat() {
 		bot = new Bot("Boti");
@@ -83,7 +86,7 @@ public class Chat extends JFrame {
 	}
 	
 	private void agregarImagenBot() {
-		ImageIcon imagenBot = new ImageIcon("Bot.png");
+		ImageIcon imagenBot = botPng;
 		JLabel etiquetaImagen = new JLabel();
 		etiquetaImagen.setBounds(10, 10, 50, 50);
 		etiquetaImagen.setIcon(new ImageIcon(imagenBot.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
@@ -106,7 +109,7 @@ public class Chat extends JFrame {
 		}
 	
 	private void agregarBoton() {
-		ImageIcon imagenBoton = new ImageIcon("boton.png");
+		ImageIcon imagenBoton = botonPng;
 		boton = new JButton(imagenBoton);
 		boton.setBounds(this.getWidth() - 65, this.getHeight() - 75, 40, 30);
 		boton.setBackground(Color.GREEN);
@@ -117,26 +120,15 @@ public class Chat extends JFrame {
 	
 	private void eventoOyenteDeMouse() {
 		MouseListener mouseListener = new MouseListener() {
-			@Override
+			
 			public void mouseClicked(MouseEvent e) {
 				simularConversacion();
 			}
 
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-			}
+			public void mousePressed(MouseEvent e) {}
+			public void mouseReleased(MouseEvent e) {}
+			public void mouseEntered(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {}
 
 		};
 		boton.addMouseListener(mouseListener);
@@ -154,20 +146,16 @@ public class Chat extends JFrame {
 	
 	private void eventosDelTeclado() {
 		KeyListener keyListener = new KeyListener() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-			}
+			
+			public void keyTyped(KeyEvent e) {}
+			public void keyPressed(KeyEvent e) {}
 
-			@Override
-			public void keyPressed(KeyEvent e) {
-			}
-
-			@Override
 			public void keyReleased(KeyEvent e) {
 				if(e.getKeyChar() == '\n') {
 					simularConversacion();
 				}
 			}
+			
 		};
 		cajaDeTexto.addKeyListener(keyListener);
 	}
@@ -199,16 +187,18 @@ public class Chat extends JFrame {
 	
 	private void escrituraBot(String s) {
 		areaDeMensajes.append(bot.enviarRespuesta(s));
-		try {
-			iniciarNotificacion();
-		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
-			e.printStackTrace();
-		}
-		sonidoNotificacion.start();
+		reproducirSonido(sonidoNotificacion);
 	}
 	
-	private void iniciarNotificacion() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
-		sonidoNotificacion = AudioSystem.getClip();
-		sonidoNotificacion.open(AudioSystem.getAudioInputStream(new File("notificacion.wav")));
+	private static void reproducirSonido(File sonido) {
+		AudioInputStream audioInputStream;
+		try {
+			audioInputStream = AudioSystem.getAudioInputStream(sonido.getAbsoluteFile());
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.start();
+		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+			ex.printStackTrace();
+		}
 	}
 }
